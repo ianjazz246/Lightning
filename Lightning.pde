@@ -4,6 +4,8 @@ int prevX = width / 2, prevY = 0, newX, newY;
 
 int cloudShift = 0;
 
+PGraphics lightningGraphic;
+
 ArrayList<ArrayList<Integer>> cloudPositions = new ArrayList<ArrayList<Integer>>();
 
 void setup()
@@ -11,13 +13,15 @@ void setup()
   size(300,300);
   background(0);
 
+  lightningGraphic = createGraphics(300, 300);
+
   //clouds
 	for (int i = 0; i < width + 20; i += (int)(Math.random() * 10)) {
 		ArrayList<Integer> innerList = new ArrayList<Integer>();
 		cloudPositions.add(innerList);
 
 						//x              ,        y
-		innerList.addAll(Arrays.asList(i, (int)(Math.random() * 20 - 10),
+		innerList.addAll(Arrays.asList(i, (int)(Math.random() * 20 + 5),
 			//width             ,  height             ,    color
 			(int) random(15, 40), (int) random(15, 25), (int) random(50, 100)));
 }
@@ -26,15 +30,6 @@ void setup()
 }
 void draw()
 {	
-	
-	//draw clouds
-	for (ArrayList cloudList : cloudPositions) {
-		fill((int) cloudList.get(4));
-		stroke((int) cloudList.get(4) - 5);
-		int x = (int)cloudList.get(0) + cloudShift;
-//		while (x < 0) x = width - x;
-		ellipse(x, (int) cloudList.get(1), (int) cloudList.get(2), (int) cloudList.get(3));
-	}
 
 	stroke(255, 255, 0);
 	if (prevY < height) {
@@ -51,7 +46,19 @@ void draw()
 	}
 
 
-	//cloudShift++;
+
+	//rain
+	
+
+	//draw clouds
+	for (ArrayList cloudList : cloudPositions) {
+		fill((int) cloudList.get(4));
+		stroke((int) cloudList.get(4) - 5);
+		int x = (int)cloudList.get(0) + cloudShift;
+//		while (x < 0) x = width - x;
+		ellipse(x, (int) cloudList.get(1), (int) cloudList.get(2), (int) cloudList.get(3));
+	}
+	cloudShift++;
 }
 void mousePressed()
 {
